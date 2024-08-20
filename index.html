@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Request Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #user-list {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of User Names</h1>
+    <ul id="user-list"></ul>
+
+    <script>
+        // Create a new XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+
+        // Configure it: GET-request for the URL /users
+        xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+
+        // Set up a function to handle the response
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Success, handle the response
+                var users = JSON.parse(xhr.responseText);
+
+                // Log the user names to the console
+                users.forEach(function(user) {
+                    console.log(user.name);
+                });
+
+                // Output the user names to the web page
+                var userList = document.getElementById('user-list');
+                users.forEach(function(user) {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = user.name;
+                    userList.appendChild(listItem);
+                });
+            }
+        };
+
+        // Send the request
+        xhr.send();
+    </script>
+</body>
+</html>
